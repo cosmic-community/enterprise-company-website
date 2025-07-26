@@ -41,20 +41,25 @@ export default async function TeamPage() {
       </section>
 
       {/* Team Members by Department */}
-      {[...sortedDepartments, ...otherDepartments].map((department) => (
-        <section key={department} className="section-padding">
-          <div className="max-w-7xl mx-auto container-padding">
-            <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-              {department}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {departmentGroups[department].map((member: TeamMember) => (
-                <TeamMemberCard key={member.id} member={member} />
-              ))}
+      {[...sortedDepartments, ...otherDepartments].map((department) => {
+        const membersInDepartment = departmentGroups[department]
+        if (!membersInDepartment) return null
+        
+        return (
+          <section key={department} className="section-padding">
+            <div className="max-w-7xl mx-auto container-padding">
+              <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
+                {department}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {membersInDepartment.map((member: TeamMember) => (
+                  <TeamMemberCard key={member.id} member={member} />
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-      ))}
+          </section>
+        )
+      })}
     </div>
   )
 }
